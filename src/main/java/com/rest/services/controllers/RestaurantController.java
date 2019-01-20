@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rest.services.modelo.Reservation;
 import com.rest.services.modelo.Restaurant;
 import com.rest.services.service.RestaurantService;
 import com.rest.services.util.RestResponse;
@@ -67,13 +69,20 @@ public class RestaurantController {
 		return this.restaurantService.findAll();
 	}
 
+	@RequestMapping(value = "/getRestaurantByID/{id}", method = RequestMethod.GET)
+	public Restaurant getResertaurantById(@PathVariable Long id) {
+		Restaurant restaurantId;
+		restaurantId = this.restaurantService.findById(id);
+		return restaurantId;
+	}
+	
 	@RequestMapping(value = "/deleteRestaurant", method = RequestMethod.POST)
 	public void deleteRestaurant(@RequestBody String restaurantJson) throws Exception {
 		this.mapper = new ObjectMapper();
 		Restaurant restaurant = this.mapper.readValue(restaurantJson, Restaurant.class);
 
 		if (restaurant.getId() == null) {
-			throw new Exception("El id del usuario no puede ser nulo");
+			throw new Exception("El id del restaurante no puede ser nulo");
 		}
 		this.restaurantService.deleteRestaurant(restaurant.getId());
 

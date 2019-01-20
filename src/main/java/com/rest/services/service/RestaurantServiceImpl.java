@@ -29,4 +29,10 @@ public class RestaurantServiceImpl implements RestaurantService{
 		this.restaurantRepository.deleteById(id);
 	}
 
+	@Override
+	public Restaurant findById(Long id) {
+		
+		return this.restaurantRepository.findById(id).get();
+	}
+
 }

@@ -27,4 +27,11 @@ public interface RestaurantService {
 	 * @param id
 	 */
 	void deleteRestaurant(Long id);
+	
+	/**
+	 * Obtenemos el restaurante por id
+	 * 
+	 * @param id
+	 */
+	Restaurant findById(Long id);
 }
